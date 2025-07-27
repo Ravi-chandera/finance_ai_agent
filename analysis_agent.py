@@ -21,7 +21,7 @@ os.environ['GOOGLE_API_KEY'] = api_key
 async def latest_price_details():
     latest_details = await get_latest_price_of_tcs_stock()
     return latest_details
-latest_details = latest_price_details()
+latest_details = asyncio.run(latest_price_details())
 
 # --- Agent Setup ---
 GEMINI_2_FLASH = "gemini-2.0-flash"
