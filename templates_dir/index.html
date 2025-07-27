@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Financial Forecasting Agent for TCS
+    </title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+        
+        .app-title {
+            font-size: 3rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 400px;
+            max-width: 90vw;
+        }
+        
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        textarea {
+            font-size: 16px;
+            padding: 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            resize: vertical;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+            background: #f8f9fa;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+        }
+        
+        input[type="submit"] {
+            font-size: 16px;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s ease;
+        }
+        
+        input[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .status-section {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            text-align: center;
+        }
+        
+        .processing {
+            color: #ffa500;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        
+        .completed {
+            color: #28a745;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        
+        .error {
+            color: #dc3545;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        
+        .download-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: transform 0.2s ease;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+        }
+        
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 10px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .footer {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            max-width: 600px;
+            padding: 0 20px;
+        }
+        
+        .description {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        
+        .developer-credit {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="app-title">Financial Forecasting Agent for TCS
+    </h1>
+    
+    <div class="container">
+        <form method="post" id="textForm">
+            <textarea name="text" rows="4" placeholder="Enter your question here..." required>Analyze the financial reports and transcripts for the last three quarters and provide a qualitative forecast for the upcoming quarter. Your forecast must identify key financial trends (e.g., revenue growth, margin pressure), summarize management's stated outlook, and highlight any significant risks or opportunities mentioned.</textarea>
+            <input type="submit" value="Generate Forecasting Report" id="submitBtn">
+        </form>
+        
+        {% if task_id %}
+            <div class="status-section" id="statusSection">
+                <div id="statusContent">
+                    <div class="spinner"></div>
+                    <p class="processing">Processing your question...</p>
+                    <p style="font-size: 14px; color: #666; margin-top: 10px;">
+                        Please wait while we generate your analysis report.
+                    </p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    
+    <div class="footer">
+        <div class="developer-credit">
+            Developed by Ravi Chandera
+        </div>
+    </div>
+
+    {% if task_id %}
+    <script>
+        const taskId = "{{ task_id }}";
+        const statusSection = document.getElementById('statusSection');
+        const statusContent = document.getElementById('statusContent');
+        
+        async function checkStatus() {
+            try {
+                const response = await fetch(`/status/${taskId}`);
+                const data = await response.json();
+                
+                if (data.status === 'processing') {
+                    // Keep showing processing status
+                    setTimeout(checkStatus, 1000);
+                } else if (data.status === 'completed') {
+                    // Show download button
+                    statusContent.innerHTML = `
+                        <p class="completed">✓ Processing Complete!</p>
+                        <p style="font-size: 14px; color: #666; margin: 10px 0;">
+                            Your analysis report has been generated successfully.
+                        </p>
+                        <a href="/download/${taskId}" class="download-btn" download>
+                            📄 Download Analysis Report
+                        </a>
+                    `;
+                } else if (data.status === 'error') {
+                    // Show error
+                    statusContent.innerHTML = `
+                        <p class="error">❌ Processing Failed</p>
+                        <p style="font-size: 14px; color: #666; margin-top: 10px;">
+                            An error occurred while processing your text. Please try again.
+                        </p>
+                    `;
+                } else {
+                    // Task not found
+                    statusContent.innerHTML = `
+                        <p class="error">❌ Task Not Found</p>
+                        <p style="font-size: 14px; color: #666; margin-top: 10px;">
+                            The processing task could not be found. Please try again.
+                        </p>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error checking status:', error);
+                setTimeout(checkStatus, 2000); // Retry after 2 seconds
+            }
+        }
+        
+        // Start checking status
+        checkStatus();
+    </script>
+    {% endif %}
+</body>
+</html>
