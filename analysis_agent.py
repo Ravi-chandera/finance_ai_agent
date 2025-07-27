@@ -18,7 +18,7 @@ with open("config.json", 'r') as file:
 api_key = config["GOOGLE_API_KEY"]
 os.environ['GOOGLE_API_KEY'] = api_key
 
-async def latest_price_details()
+async def latest_price_details():
     latest_details = await get_latest_price_of_tcs_stock()
     return latest_details
 latest_details = latest_price_details()
