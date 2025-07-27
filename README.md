@@ -64,3 +64,10 @@
    ```
    http://localhost:8000/
    ```
+10. Task is already inserted. Click on generate analysis report button. It will take 3 to 4 minutes. 
+
+11. You will get button to download reports. If you do not see that button, go to **reports** folder in your code.
+
+![Screenshot](.artifacts/image.png)
+
+12. Website is not optimized so open same URL into new tab to ask again. 

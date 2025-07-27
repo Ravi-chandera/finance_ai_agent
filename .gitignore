@@ -85,3 +85,4 @@ Thumbs.db
 # Local config
 .gitignore
 config.json
+reports/
