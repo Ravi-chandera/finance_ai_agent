@@ -18,10 +18,14 @@ with open("config.json", 'r') as file:
 api_key = config["GOOGLE_API_KEY"]
 os.environ['GOOGLE_API_KEY'] = api_key
 
+latest_details = None
+
 async def latest_price_details():
     latest_details = await get_latest_price_of_tcs_stock()
     return latest_details
-latest_details = asyncio.run(latest_price_details())
+async def get_latest_details():
+    return await latest_price_details()
+latest_details = get_latest_details()
 
 # --- Agent Setup ---
 GEMINI_2_FLASH = "gemini-2.0-flash"
