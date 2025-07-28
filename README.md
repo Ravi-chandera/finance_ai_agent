@@ -71,3 +71,5 @@
 ![Screenshot](./artifacts/image.png)
 
 12. Website is not optimized so open same URL into new tab to ask again. 
+## Architecture 
+Visit: https://ravichandera.notion.site/Elevation-AI-assignment-by-Ravi-Chandera-23c9b8fda598807f8d88fac47211e02a
