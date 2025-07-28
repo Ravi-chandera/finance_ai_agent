@@ -73,4 +73,3 @@
 12. Website is not optimized so open same URL into new tab to ask again. 
 ## Architecture 
 Visit: https://ravichandera.notion.site/TCS-stock-forecasting-agent-by-Ravi-Chandera-23c9b8fda598807f8d88fac47211e02a
->>>>>>> 6dfec3937b72d6df2f6349c87af84b0662e6af66
