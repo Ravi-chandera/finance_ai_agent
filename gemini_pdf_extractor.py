@@ -3,9 +3,14 @@ from google.genai import types
 import pathlib
 import httpx
 import pathlib
+import json
+# Load environment variables
+with open("config.json", 'r') as file:
+    config = json.load(file)
 
-client = genai.Client(api_key="AIzaSyCAaYSZdgeGrhEYK9ycITfR6VPNK56ykDc")
+api_key = config["GOOGLE_API_KEY"]
 
+client = genai.Client(api_key=api_key)
 # Retrieve and encode the PDF byte
 def extract_pdf_to_text_using_gemini(pdf_path, output_file):
     filepath = pathlib.Path(pdf_path)

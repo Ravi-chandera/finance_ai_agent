@@ -1,12 +1,13 @@
 ## Running steps
 1. Clone repo 
-git clone repo: https://github.com/Ravi-chandera/finance_ai_agent.git
+git clone https://github.com/Ravi-chandera/finance_ai_agent.git
 2. Create virtual environment 
 python -m venv venv
 3. Activate virtual environment 
 venv\Scripts\activate
-
-2. Enter into directory 
+4. Enter into directory 
 cd finance_ai_agent
-3. run below command
+5. Install dependencies 
+pip install -r requirements.txt
+6. run below command
 uvicorn main:app --reload
