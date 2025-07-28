@@ -6,6 +6,7 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import inch
 from finance_agent import anlyse_user_question
+from analysis_agent import latest_price_details, latest_details
 import os
 import uuid
 from datetime import datetime
@@ -14,6 +15,12 @@ import markdown  # <-- Add this import
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates_dir")
+
+@app.on_event("startup")
+async def startup_event():
+    global latest_details
+    latest_details = await latest_price_details()
+
 
 # Store for tracking processing status
 processing_status = {}
