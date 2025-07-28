@@ -72,4 +72,4 @@
 
 12. Website is not optimized so open same URL into new tab to ask again. 
 ## Architecture 
-Visit: https://ravichandera.notion.site/Elevation-AI-assignment-by-Ravi-Chandera-23c9b8fda598807f8d88fac47211e02a
+Visit: https://ravichandera.notion.site/TCS-stock-forecasting-agent-by-Ravi-Chandera-23c9b8fda598807f8d88fac47211e02a
